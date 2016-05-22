@@ -1,7 +1,7 @@
-PNG_NAME        := libpng-1.6.21
-JPEG_SRC_NAME   := jpegsrc.v9a# filename at the server
-JPEG_DIR_NAME   := jpeg-9a# folder name after the JPEG_SRC_NAME archive has been unpacked
-TIFF_NAME       := tiff-4.0.4
+PNG_NAME        = libpng-1.6.21
+JPEG_SRC_NAME   = jpegsrc.v9a# filename at the server
+JPEG_DIR_NAME   = jpeg-9a# folder name after the JPEG_SRC_NAME archive has been unpacked
+TIFF_NAME       = tiff-4.0.4
 
 SDK_IPHONEOS_PATH=$(shell xcrun --sdk iphoneos --show-sdk-path)
 SDK_IPHONESIMULATOR_PATH=$(shell xcrun --sdk iphonesimulator --show-sdk-path)
@@ -80,6 +80,7 @@ $(TIFF_SRC)/%/Makefile : $(libtiffconfig)
 	export CFLAGS="-Qunused-arguments -arch $(call swap, $*, $(arch_names_all), $(archs_all)) -pipe -no-cpp-precomp -isysroot $$SDKROOT -miphoneos-version-min=$(IOS_DEPLOY_TGT) -O2 -fembed-bitcode" ; \
 	export CPPFLAGS=$$CFLAGS ; \
 	export CXXFLAGS="$$CFLAGS -Wno-deprecated-register"; \
+        export OTHER_CFLAGS="-fembed-bitcode"
 	mkdir -p $(@D) ; \
 	cd $(@D) ; \
 	../configure --host=$* --enable-fast-install --enable-shared=no --prefix=`pwd` --without-x --with-jpeg-include-dir=$(abspath $(@D)/../../$(JPEG_DIR_NAME)/$*/include) --with-jpeg-lib-dir=$(abspath $(@D)/../../$(JPEG_DIR_NAME)/$*/lib)
